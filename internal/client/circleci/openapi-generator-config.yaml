@@ -1,0 +1,3 @@
+additionalProperties:
+  packageName: circleci
+  isGoSubmodule: false
