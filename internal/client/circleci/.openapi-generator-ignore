@@ -1,0 +1,5 @@
+go.mod
+go.sum
+api/openapi.yaml
+git_push.sh
+.travis.yml

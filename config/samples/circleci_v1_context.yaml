@@ -1,0 +1,98 @@
+apiVersion: circleci.meowhq.dev/v1
+kind: Context
+metadata:
+  labels:
+    app.kubernetes.io/name: context
+    app.kubernetes.io/instance: context-sample
+    app.kubernetes.io/part-of: circleci-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: circleci-operator
+  name: context-sample
+spec:
+  provider:
+    name: provider-sample
+  owner:
+    vcs: gh
+    name: sunggun-yu
+  name: test-context-1
+  env:
+    - name: MY_TEST_TOKEN_1
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-1
+          key: key1
+    - name: MY_TEST_TOKEN_2
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-1
+          key: key2
+    - name: MY_TEST_TOKEN_3
+      value: justvalue
+    - name: MY_TEST_TOKEN_4
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-2
+          key: key4
+    - name: MY_TEST_TOKEN_5
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-1
+          key: key5
+
+---
+apiVersion: circleci.meowhq.dev/v1
+kind: Context
+metadata:
+  name: context-sample-2
+spec:
+  provider:
+    name: provider-sample
+  owner:
+    vcs: gh
+    name: sunggun-yu
+  name: test-context-2
+  env:
+    - name: MY_TEST_TOKEN_1
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-2
+          key: key1
+    - name: MY_TEST_TOKEN_2
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-2
+          key: key2
+    - name: MY_TEST_TOKEN_3
+      value: justvalue
+    - name: MY_TEST_TOKEN_4
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-2
+          key: key4
+    - name: MY_TEST_TOKEN_5
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-1
+          key: key5
+
+---
+apiVersion: circleci.meowhq.dev/v1
+kind: Context
+metadata:
+  name: context-sample-3
+spec:
+  provider:
+    name: provider-sample
+  owner:
+    vcs: gh
+    name: sunggun-yu
+  name: test-context-3
+  envFrom:
+    secretRef:
+      name: some-secret-3
+  env:
+    - name: MY_ENV_01
+      valueFrom:
+        secretKeyRef:
+          name: some-secret-1
+          key: key1

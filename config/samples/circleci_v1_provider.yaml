@@ -1,0 +1,16 @@
+apiVersion: circleci.meowhq.dev/v1
+kind: Provider
+metadata:
+  labels:
+    app.kubernetes.io/name: provider
+    app.kubernetes.io/instance: provider-sample
+    app.kubernetes.io/part-of: circleci-operator
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: circleci-operator
+  name: provider-sample
+spec:
+  auth:
+    token:
+      secretKeyRef:
+        name: cci-token
+        key: token

@@ -1,0 +1,152 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.11.1
+  creationTimestamp: null
+  name: contexts.circleci.meowhq.dev
+spec:
+  group: circleci.meowhq.dev
+  names:
+    kind: Context
+    listKind: ContextList
+    plural: contexts
+    singular: context
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Context is the Schema for the contexts API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: ContextSpec defines the desired state of Context
+            properties:
+              deleteRemoteWhenDelete:
+                description: DeleteRemoteWhenDelete is flag to delete remote when
+                  delete object
+                type: boolean
+              env:
+                description: Env represents environment variable of the context
+                items:
+                  description: EnvVar represents an environment variable that can
+                    be used in a Context and Project.
+                  properties:
+                    name:
+                      description: The name of the environment variable.
+                      type: string
+                    value:
+                      description: The value of the environment variable.
+                      type: string
+                    valueFrom:
+                      description: The value of the environment variable as a reference
+                        to a secret key.
+                      properties:
+                        secretKeyRef:
+                          description: SecretKeySelector selects a key of a Secret
+                          properties:
+                            key:
+                              description: The key of the secret to select from.  Must
+                                be a valid secret key.
+                              type: string
+                            name:
+                              description: The name of the secret to select from.
+                              type: string
+                            namespace:
+                              description: The namespace of the secret to select from.
+                              type: string
+                          required:
+                          - key
+                          - name
+                          type: object
+                          x-kubernetes-map-type: atomic
+                      type: object
+                  required:
+                  - name
+                  type: object
+                type: array
+              envFrom:
+                description: EnvFrom is set of environment variables from the secrets
+                properties:
+                  secretRef:
+                    description: SecretEnvSource
+                    properties:
+                      name:
+                        type: string
+                      namespace:
+                        type: string
+                    required:
+                    - name
+                    type: object
+                type: object
+              name:
+                maxLength: 512
+                type: string
+                x-kubernetes-validations:
+                - message: Name is immutable
+                  rule: self == oldSelf
+              owner:
+                description: Owner represents the owner of the context
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  vcs:
+                    default: gh
+                    enum:
+                    - gh
+                    - bb
+                    type: string
+                type: object
+              provider:
+                description: Provider is name of the provider to reference the provider
+                  in the same namespace
+                properties:
+                  name:
+                    type: string
+                required:
+                - name
+                type: object
+            required:
+            - name
+            - owner
+            - provider
+            type: object
+          status:
+            description: ContextStatus defines the observed state of Context
+            properties:
+              createdAt:
+                description: Created timestamp of the context
+                type: string
+              env:
+                additionalProperties:
+                  format: byte
+                  type: string
+                description: EnvVars contains the environment name and it's bcrypted
+                  value to compare when the context is updated
+                type: object
+              id:
+                description: UUID of the context
+                type: string
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
