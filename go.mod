@@ -3,7 +3,7 @@ module github.com/sunggun-yu/circleci-operator
 go 1.19
 
 require (
-	github.com/CircleCI-Public/circleci-cli v0.1.23391
+	github.com/CircleCI-Public/circleci-cli v0.1.23845
 	github.com/go-logr/logr v1.2.3
 	github.com/onsi/ginkgo/v2 v2.6.0
 	github.com/onsi/gomega v1.24.1
