@@ -6,6 +6,7 @@ import (
 
 	cciapi "github.com/CircleCI-Public/circleci-cli/api"
 	ccigraphql "github.com/CircleCI-Public/circleci-cli/api/graphql"
+	cciapiproject "github.com/CircleCI-Public/circleci-cli/api/project"
 	ccisettings "github.com/CircleCI-Public/circleci-cli/settings"
 	"github.com/go-logr/logr"
 	v1 "github.com/sunggun-yu/circleci-operator/api/circleci/v1"
@@ -58,10 +59,12 @@ func NewCircleciAPIClient(log logr.Logger, k8sclient k8sclient.Client, spec *v1.
 	return c, nil
 }
 
+// NewContextClient creates a new context REST API client
 func (c *ApiClient) NewContextClient() (*cciapi.ContextRestClient, error) {
 	return cciapi.NewContextRestClient(*c.config)
 }
 
-// func (c *ApiClient) NewProjectClient() (*cciapiproject.ProjectClient, error) {
-// 	return cciapiproject.NewProjectRestClient(*c.config)
-// }
+// NewProjectClient creates a new project REST API client
+func (c *ApiClient) NewProjectClient() (cciapiproject.ProjectClient, error) {
+	return cciapiproject.NewProjectRestClient(*c.config)
+}
