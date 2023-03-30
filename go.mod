@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/CircleCI-Public/circleci-cli v0.1.23845
-	github.com/go-logr/logr v1.2.3
+	github.com/go-logr/logr v1.2.4
 	github.com/onsi/ginkgo/v2 v2.9.1
 	github.com/onsi/gomega v1.27.3
 	golang.org/x/crypto v0.7.0
